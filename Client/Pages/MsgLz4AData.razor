@@ -1,0 +1,55 @@
+﻿@page "/fetchmsglz4adata"
+@using BlazorMsgPack.Shared
+@using MessagePack
+@using System.Net.Http.Headers
+@inject HttpClient Http
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server. MessagePack with Lz4BlockArray</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <p>Data loaded in @timeTaken</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[] forecasts;
+    private TimeSpan timeTaken;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var start = DateTime.Now;
+        Console.WriteLine("Start:" + DateTime.Now);
+        forecasts = await Http.GetFromMessagePackLz4AAsync<WeatherForecast[]>("MsgPack");
+        Console.WriteLine("End:" + DateTime.Now);
+        timeTaken = DateTime.Now - start;
+        Console.WriteLine(timeTaken);
+    }
+
+}
