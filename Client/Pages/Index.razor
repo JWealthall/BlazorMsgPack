@@ -1,7 +1,63 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<h1>Blazor Message Pack</h1>
 
-Welcome to your new app.
+<h2>Summary</h2>
+This is just an example program to show how Message Pack can be used instead of JSON for transmission to/from an API.
+<p />
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+There are pros and cons to both serialization methods. The main reason for using Message Pack would be to increase the speed of transfer and reduce the size of the data. The main reason for using JSON would be for an API where if a change is made to the data structure both ends are likely to still process it.
+<p />
+
+<h2>Advantages/Disadvantages</h2>
+
+<h3>JSON</h3>
+
+<h4>Advantages</h4>
+<ul>
+    <li>Human readable</li>
+    <li>Missing data tolerant</li>
+    <li>Extra data tolerant</li>
+</ul>
+
+<h4>Disadvantages</h4>
+<ul>
+    <li>Human readable (it's potentially a security risk)</li>
+    <li>Larger data</li>
+    <li>Slower</li>
+    <li>Some formats (e.g. dates) lost in translation (i.e. they're different at both ends)</li>
+</ul>
+
+<h3>Message Pack</h3>
+
+<h4>Advantages</h4>
+<ul>
+    <li>Binary format</li>
+    <li>Smaller data (compression options available)</li>
+    <li>Faster</li>
+    <li>What you send is what you receive</li>
+</ul>
+
+<h4>Disadvantages</h4>
+<ul>
+    <li>Both ends must use same data structure</li>
+</ul>
+
+<h2>Notes</h2>
+The data read is the standard Weather Forecast data with 10K rows
+<p />
+
+The time taken is the full round trip to the server.  This includes, the request, the serialization on the server, the transportation and the deserialization in the client.
+<p />
+
+The size doesn't not take into account any compression which may have taken place in the transportation layer itself.
+<p />
+
+The program uses a copy of the .Net JSON methods where I have modified the read part to allow me to get the number of bytes read before deserializing.
+<p />
+
+The Long Test runs through 101 cycles of each type. Note that the first run is ignored from the averages as that is always the outlier.
+<p />
+
+Open up the browser's development tools and take a look at the network tab to see what data is returned to each type.
+<p />

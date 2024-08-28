@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MessagePack" Version="2.2.85" />
-    <PackageReference Include="MessagePack.AspNetCoreMvcFormatter" Version="2.2.85" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.2" />
+    <PackageReference Include="MessagePack.AspNetCoreMvcFormatter" Version="2.5.172" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Client\BlazorMsgPack.Client.csproj" />
     <ProjectReference Include="..\Shared\BlazorMsgPack.Shared.csproj" />
   </ItemGroup>
-
 
 </Project>

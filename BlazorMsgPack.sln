@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35209.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorMsgPack.Server", "Server\BlazorMsgPack.Server.csproj", "{EA563EBB-8167-46B6-948C-211B3778F29F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMsgPack.Server", "Server\BlazorMsgPack.Server.csproj", "{B31A8D41-E117-43E4-B798-C7006C7A6418}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorMsgPack.Client", "Client\BlazorMsgPack.Client.csproj", "{FBD249D4-A82A-4608-8823-02926E5F9450}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMsgPack.Client", "Client\BlazorMsgPack.Client.csproj", "{9E99A83A-FE29-45B1-B120-D1DA93C28AF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorMsgPack.Shared", "Shared\BlazorMsgPack.Shared.csproj", "{8EF84DE6-1EF5-412A-819D-D453187730E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMsgPack.Shared", "Shared\BlazorMsgPack.Shared.csproj", "{E00D4066-D7B9-4B85-A216-B5C0EC8987EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36AE7508-FA7A-4004-87FC-86FFB8BEBD43}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.md = ReadMe.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,23 +20,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EA563EBB-8167-46B6-948C-211B3778F29F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA563EBB-8167-46B6-948C-211B3778F29F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA563EBB-8167-46B6-948C-211B3778F29F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA563EBB-8167-46B6-948C-211B3778F29F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBD249D4-A82A-4608-8823-02926E5F9450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBD249D4-A82A-4608-8823-02926E5F9450}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBD249D4-A82A-4608-8823-02926E5F9450}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBD249D4-A82A-4608-8823-02926E5F9450}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8EF84DE6-1EF5-412A-819D-D453187730E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8EF84DE6-1EF5-412A-819D-D453187730E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8EF84DE6-1EF5-412A-819D-D453187730E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8EF84DE6-1EF5-412A-819D-D453187730E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B31A8D41-E117-43E4-B798-C7006C7A6418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B31A8D41-E117-43E4-B798-C7006C7A6418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B31A8D41-E117-43E4-B798-C7006C7A6418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B31A8D41-E117-43E4-B798-C7006C7A6418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E99A83A-FE29-45B1-B120-D1DA93C28AF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E99A83A-FE29-45B1-B120-D1DA93C28AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E99A83A-FE29-45B1-B120-D1DA93C28AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E99A83A-FE29-45B1-B120-D1DA93C28AF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E00D4066-D7B9-4B85-A216-B5C0EC8987EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E00D4066-D7B9-4B85-A216-B5C0EC8987EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E00D4066-D7B9-4B85-A216-B5C0EC8987EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E00D4066-D7B9-4B85-A216-B5C0EC8987EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {44F75443-14A7-4047-B3CB-10AB43951C58}
+		SolutionGuid = {025CD3DE-BB9A-43E1-9F24-48D2ACDD4876}
 	EndGlobalSection
 EndGlobal

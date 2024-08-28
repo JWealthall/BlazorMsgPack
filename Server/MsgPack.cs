@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using MessagePack;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using BlazorMsgPack.Shared;
@@ -11,13 +7,11 @@ using Microsoft.Extensions.Primitives;
 namespace BlazorMsgPack.Server
 {
     #region Lz4
-    public class MessagePackLz4InputFormatter : IInputFormatter
+    public class MessagePackLz4InputFormatter(MessagePackSerializerOptions options) : IInputFormatter
     {
         private const string ContentType = MsgPack.MessagePackMediaTypeLz4;
-        private readonly MessagePackSerializerOptions options;
 
         public MessagePackLz4InputFormatter() : this(MsgPack.CustomFormatterLz4) { }
-        public MessagePackLz4InputFormatter(MessagePackSerializerOptions options) { this.options = options; }
 
         public bool CanRead(InputFormatterContext context) => context.HttpContext.Request.ContentType == ContentType;
 
@@ -29,13 +23,11 @@ namespace BlazorMsgPack.Server
         }
     }
 
-    public class MessagePackLz4OutputFormatter : IOutputFormatter
+    public class MessagePackLz4OutputFormatter(MessagePackSerializerOptions options) : IOutputFormatter
     {
         private const string ContentType = MsgPack.MessagePackMediaTypeLz4;
-        private readonly MessagePackSerializerOptions options;
 
         public MessagePackLz4OutputFormatter() : this(MsgPack.CustomFormatterLz4) { }
-        public MessagePackLz4OutputFormatter(MessagePackSerializerOptions options) { this.options = options; }
 
         public bool CanWriteResult(OutputFormatterCanWriteContext context)
         {
@@ -92,13 +84,11 @@ namespace BlazorMsgPack.Server
     #endregion Lz4
     
     #region Lz4A
-    public class MessagePackLz4AInputFormatter : IInputFormatter
+    public class MessagePackLz4AInputFormatter(MessagePackSerializerOptions options) : IInputFormatter
     {
         private const string ContentType = MsgPack.MessagePackMediaTypeLz4A;
-        private readonly MessagePackSerializerOptions options;
 
         public MessagePackLz4AInputFormatter() : this(MsgPack.CustomFormatterLz4A) { }
-        public MessagePackLz4AInputFormatter(MessagePackSerializerOptions options) { this.options = options; }
 
         public bool CanRead(InputFormatterContext context) => context.HttpContext.Request.ContentType == ContentType;
 
@@ -111,13 +101,11 @@ namespace BlazorMsgPack.Server
         }
     }
 
-    public class MessagePackLz4AOutputFormatter : IOutputFormatter
+    public class MessagePackLz4AOutputFormatter(MessagePackSerializerOptions options) : IOutputFormatter
     {
         private const string ContentType = MsgPack.MessagePackMediaTypeLz4A;
-        private readonly MessagePackSerializerOptions options;
 
         public MessagePackLz4AOutputFormatter() : this(MsgPack.CustomFormatterLz4A) { }
-        public MessagePackLz4AOutputFormatter(MessagePackSerializerOptions options) { this.options = options; }
 
         public bool CanWriteResult(OutputFormatterCanWriteContext context)
         {
