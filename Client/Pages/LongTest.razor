@@ -1,0 +1,153 @@
+﻿@page "/longtest"
+@using BlazorMsgPack.Shared
+@inject HttpClient Http
+
+<h3>LongTest</h3>
+<p>@_current of @Max</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Average Duration</th>
+            <th>Average Size</th>
+            <th>Latest Duration</th>
+            <th>Latest Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>JSON</td>
+            <td>@_jsonAvg</td>
+            <td>@_jsonSizeAvg.ToString("N0")</td>
+            <td>@_jsonLatest</td>
+            <td>@_jsonSizeLatest.ToString("N0")</td>
+        </tr>
+        <tr>
+            <td>Message Pack</td>
+            <td>@_mPackAvg</td>
+            <td>@_mPackSizeAvg.ToString("N0")</td>
+            <td>@_mPackLatest</td>
+            <td>@_mPackSizeLatest.ToString("N0")</td>
+        </tr>
+        <tr>
+            <td>Message Pack LZ4</td>
+            <td>@_mPckLz4Avg</td>
+            <td>@_mPckLz4SizeAvg.ToString("N0")</td>
+            <td>@_mPckLz4Latest</td>
+            <td>@_mPckLz4SizeLatest.ToString("N0")</td>
+        </tr>
+        <tr>
+            <td>Message Pack</td>
+            <td>@_mPckLz4AAvg</td>
+            <td>@_mPckLz4ASizeAvg.ToString("N0")</td>
+            <td>@_mPckLz4ALatest</td>
+            <td>@_mPckLz4ASizeLatest.ToString("N0")</td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+    private int _current;
+    private const int Max = 100;
+
+    private List<double> _jsonTimes = [];
+    private TimeSpan _jsonAvg;
+    private TimeSpan _jsonLatest = new();
+    private List<long> _jsonSizes = [];
+    private long _jsonSizeAvg;
+    private long _jsonSizeLatest = new();
+
+    private List<double> _mPackTimes = [];
+    private TimeSpan _mPackAvg;
+    private TimeSpan _mPackLatest = new();
+    private List<long> _mPackSizes = [];
+    private long _mPackSizeAvg;
+    private long _mPackSizeLatest = new();
+
+    private List<double> _mPckLz4Times = [];
+    private TimeSpan _mPckLz4Avg;
+    private TimeSpan _mPckLz4Latest = new();
+    private List<long> _mPckLz4Sizes = [];
+    private long _mPckLz4SizeAvg;
+    private long _mPckLz4SizeLatest = new();
+
+    private List<double> _mPckLz4ATimes = [];
+    private TimeSpan _mPckLz4AAvg;
+    private TimeSpan _mPckLz4ALatest = new();
+    private List<long> _mPckLz4ASizes = [];
+    private long _mPckLz4ASizeAvg;
+    private long _mPckLz4ASizeLatest = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RunTest();
+        _jsonTimes = [];
+        _jsonSizes = [];
+        _mPackTimes = [];
+        _mPackSizes = [];
+        _mPckLz4Times = [];
+        _mPckLz4Sizes = [];
+        _mPckLz4ATimes = [];
+        _mPckLz4ASizes = [];
+        for (_current = 1; _current <= Max; _current++)
+        {
+            await RunTest();
+        }
+    }
+
+    private async Task RunTest()
+    {
+        var start = DateTime.Now;
+        Console.WriteLine("Start:" + DateTime.Now);
+        // await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        await Http.GetFromJsonExtAsync<WeatherForecast[]>("WeatherForecast");
+        Console.WriteLine("End:" + DateTime.Now);
+        _jsonLatest = DateTime.Now - start;
+        _jsonTimes.Add(_jsonLatest.TotalMilliseconds);
+        _jsonAvg = TimeSpan.FromMilliseconds(_jsonTimes.Average());
+        _jsonSizeLatest = JsonExt.BytesRead;
+        _jsonSizes.Add(_jsonSizeLatest);
+        _jsonSizeAvg = (long)_jsonSizes.Average();
+        Console.WriteLine(_jsonLatest);
+        StateHasChanged();
+
+        start = DateTime.Now;
+        Console.WriteLine("Start:" + DateTime.Now);
+        await Http.GetFromMessagePackAsync<WeatherForecast[]>("WeatherForecast");
+        Console.WriteLine("End:" + DateTime.Now);
+        _mPackLatest = DateTime.Now - start;
+        _mPackTimes.Add(_mPackLatest.TotalMilliseconds);
+        _mPackAvg = TimeSpan.FromMilliseconds(_mPackTimes.Average());
+        _mPackSizeLatest = MsgPack.BytesRead;
+        _mPackSizes.Add(_mPackSizeLatest);
+        _mPackSizeAvg = (long)_mPackSizes.Average();
+        Console.WriteLine(_mPackLatest);
+        StateHasChanged();
+
+        start = DateTime.Now;
+        Console.WriteLine("Start:" + DateTime.Now);
+        await Http.GetFromMessagePackLz4Async<WeatherForecast[]>("WeatherForecast");
+        Console.WriteLine("End:" + DateTime.Now);
+        _mPckLz4Latest = DateTime.Now - start;
+        _mPckLz4Times.Add(_mPckLz4Latest.TotalMilliseconds);
+        _mPckLz4Avg = TimeSpan.FromMilliseconds(_mPckLz4Times.Average());
+        _mPckLz4SizeLatest = MsgPack.BytesRead;
+        _mPckLz4Sizes.Add(_mPckLz4SizeLatest);
+        _mPckLz4SizeAvg = (long)_mPckLz4Sizes.Average();
+        Console.WriteLine(_mPckLz4Latest);
+        StateHasChanged();
+
+        start = DateTime.Now;
+        Console.WriteLine("Start:" + DateTime.Now);
+        await Http.GetFromMessagePackAsync<WeatherForecast[]>("WeatherForecast");
+        Console.WriteLine("End:" + DateTime.Now);
+        _mPckLz4ALatest = DateTime.Now - start;
+        _mPckLz4ATimes.Add(_mPckLz4ALatest.TotalMilliseconds);
+        _mPckLz4AAvg = TimeSpan.FromMilliseconds(_mPckLz4ATimes.Average());
+        _mPckLz4ASizeLatest = MsgPack.BytesRead;
+        _mPckLz4ASizes.Add(_mPckLz4ASizeLatest);
+        _mPckLz4ASizeAvg = (long)_mPckLz4ASizes.Average();
+        Console.WriteLine(_mPckLz4ALatest);
+        StateHasChanged();
+    }
+}

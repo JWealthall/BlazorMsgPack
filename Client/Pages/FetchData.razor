@@ -6,13 +6,14 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (forecasts == null)
+@if (_forecasts == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <p>Data loaded in @timeTaken</p>
+    <p>Data loaded in @_timeTaken</p>
+    <p>Bytes read @_bytesRead.ToString("N0")</p>
     <table class="table">
         <thead>
             <tr>
@@ -23,7 +24,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var forecast in _forecasts)
             {
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
@@ -37,17 +38,20 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
-    private TimeSpan timeTaken;
+    private WeatherForecast[]? _forecasts;
+    private TimeSpan _timeTaken;
+    private long _bytesRead;
 
     protected override async Task OnInitializedAsync()
     {
         var start = DateTime.Now;
         Console.WriteLine("Start:" + DateTime.Now);
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        // _forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        _forecasts = await Http.GetFromJsonExtAsync<WeatherForecast[]>("WeatherForecast");
+        _bytesRead = JsonExt.BytesRead;
         Console.WriteLine("End:" + DateTime.Now);
-        timeTaken = DateTime.Now - start;
-        Console.WriteLine(timeTaken);
+        _timeTaken = DateTime.Now - start;
+        Console.WriteLine(_timeTaken);
     }
 
 }

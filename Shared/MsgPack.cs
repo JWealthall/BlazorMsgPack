@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Headers;
 using MessagePack;
 using MessagePack.Resolvers;
 
@@ -13,6 +6,8 @@ namespace BlazorMsgPack.Shared
 {
     public static class MsgPack
     {
+        public static long BytesRead { get; set; } = 0;
+
         public const string MessagePackMediaType = "application/x-msgpack";
         public const string MessagePackMediaTypeLz4 = "application/x-msgpack-lz4";
         public const string MessagePackMediaTypeLz4A = "application/x-msgpack-lz4a";
@@ -177,14 +172,10 @@ namespace BlazorMsgPack.Shared
 
         private static async Task<T?> GetFromMessagePackAsyncCore<T>(Task<HttpResponseMessage?> taskResponse, MessagePackSerializerOptions? options, CancellationToken cancellationToken)
         {
-            using (HttpResponseMessage response = await taskResponse.ConfigureAwait(false))
-            {
-                response.EnsureSuccessStatusCode();
-                // Nullable forgiving reason:
-                // GetAsync will usually return Content as not-null.
-                // If Content happens to be null, the extension will throw.
-                return await response.Content!.ReadFromMessagePackAsync<T>(options, cancellationToken).ConfigureAwait(false);
-            }
+            using HttpResponseMessage? response = await taskResponse.ConfigureAwait(false);
+            if (response == null) throw new NullReferenceException("Failed to get HTTP Response Message");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromMessagePackAsync<T>(options, cancellationToken).ConfigureAwait(false);
         }
         #endregion Get
 
@@ -464,6 +455,7 @@ namespace BlazorMsgPack.Shared
         private static async Task<T?> ReadFromMessagePackAsyncCore<T>(this HttpContent content, MessagePackSerializerOptions? options, CancellationToken cancellationToken = default)
         {
             var bytes = await content.ReadAsByteArrayAsync(cancellationToken);
+            BytesRead = bytes.LongLength;   // This is here for comparison processing
             return MessagePackSerializer.Deserialize<T>(bytes, options);
         }
         #endregion Read
