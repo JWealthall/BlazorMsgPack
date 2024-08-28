@@ -1,8 +1,5 @@
 <h1>Blazor Message Pack</h1>
 
-
-[[_TOC_]]
-
 # Summary
 
 This is just an example program to show how Message Pack can be used instead of JSON for transmission to/from an API.
