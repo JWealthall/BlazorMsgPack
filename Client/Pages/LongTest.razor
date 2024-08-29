@@ -139,7 +139,7 @@
 
         start = DateTime.Now;
         Console.WriteLine("Start:" + DateTime.Now);
-        await Http.GetFromMessagePackAsync<WeatherForecast[]>("WeatherForecast");
+        await Http.GetFromMessagePackLz4AAsync<WeatherForecast[]>("WeatherForecast");
         Console.WriteLine("End:" + DateTime.Now);
         _mPckLz4ALatest = DateTime.Now - start;
         _mPckLz4ATimes.Add(_mPckLz4ALatest.TotalMilliseconds);
